@@ -1,0 +1,36 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: "org.jruyi.thrift"
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+	compile 'com.linecorp.armeria:armeria:0.16.0.Final'
+	compile 'com.google.inject:guice:4.0'
+	compile 'com.google.inject.extensions:guice-multibindings:4.0'
+	compile 'org.apache.thrift:libthrift:0.9.3'
+	testCompile 'junit:junit:4.12'
+}
+
+tasks.withType(JavaCompile) {
+	sourceCompatibility '1.8'
+	targetCompatibility '1.8'
+}
+
+buildscript {
+	repositories {
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath "gradle.plugin.org.jruyi.gradle:thrift-gradle-plugin:0.3.1"
+	}
+}
+
+compileThrift {
+	createGenFolder false
+	generator 'java', 'fullcamel'
+}
